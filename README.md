@@ -12,4 +12,6 @@ and the tsv file specifies the data to be analyzed.
 
 The reference files folder contain the yaml, json and tsv files used in the small RNAseq analysis for the lung cells (A549 and BEAS2B). 
 
-In lungcells_miRNA_hsu.yaml file, NEBNext.fa contains the 3' adaptor sequence for adaptor trimming: AGATCGGAAGAGCACACGTCT# small RNAseq Pipeline
+In lungcells_miRNA_hsu.yaml file, NEBNext.fa contains the 3' adaptor sequence for adaptor trimming: AGATCGGAAGAGCACACGTCT.
+
+For the source code of the pipeline, please find https://github.com/CBGOUS/frekner_SmallRNAPipeline and https://github.com/CBGOUS/frekner_bagcore

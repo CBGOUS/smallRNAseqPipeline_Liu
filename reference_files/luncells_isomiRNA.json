@@ -1,0 +1,18 @@
+{"pipelineName":"lungcells_isomiRNA_pipe",
+ "projectID":"smallRNA",
+ "projectRoot":"/mnt/data21/udata/siqingl/lungcells/",
+ "dataRoot":"/data/",
+ "stepsData":
+   [
+     {"step":"UnzipInputFiles",                 "inputFolder":"fastq_files",      "outputFolder":"fastq_files",       "parameterString":"paramQC2"},
+     {"step":"SingleReadAdapterTrim",           "inputFolder":"fastq_files",      "outputFolder":"trimmed_reads",     "parameterString":"trimParamNEBNEXT"},
+     {"step":"FastqQC",                         "inputFolder":"trimmed_reads",    "outputFolder":"fastqc",            "parameterString":"paramQC8"},
+     {"step":"CollapseReads",                   "inputFolder":"trimmed_reads",    "outputFolder":"collapsed_reads",   "parameterString":"trimParam1"},
+     {"step":"BowtieMapSingleAbundantReads",    "inputFolder":"collapsed_reads",  "outputFolder":"mapped_reads",      "parameterString":"mapMismatch1"},
+     {"step":"BowtieMapSingleGenomeReads",      "inputFolder":"mapped_reads",     "outputFolder":"mapped_reads",      "parameterString":"mapMismatch2"},
+     {"step":"ParseSAMForMiRNAs",               "inputFolder":"mapped_reads",     "outputFolder":"counted_features",  "parameterString":"parseIso"},
+     {"step":"MergeIsomiRCounts",               "inputFolder":"counted_features", "outputFolder":"counted_features",  "parameterString":"mergeIso"},
+     {"step":"DEwithEdgeRSingleFactor",         "inputFolder":"counted_features", "outputFolder":"deedger",           "parameterString":"parDEEdgeR"},
+     {"step":"Exit"}
+    ]
+}

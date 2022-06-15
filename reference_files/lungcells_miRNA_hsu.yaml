@@ -1,0 +1,96 @@
+---
+ReferenceData:
+  genomeRootFolder: /mnt/data21/data/genomes
+  targetscanFolder: /mnt/data21/data/targetscan
+  mirbaseFolder:    /mnt/data21/data/mirbase/
+  mirgenedbFolder:  /mnt/data21/data/mirgenedb
+
+UnzipInputFiles:
+  Required:
+    unzipSoftware: /usr/bin/pigz
+  Optional:
+    paramQC3: "--processes 4 -d"
+    paramQC2: "--processes 6 -d"
+
+FastqQC:
+  Required:
+    FastQCSoftware: /usr/local/bin/fastqc
+  Optional:
+    paramQC4: "--threads 4"
+    paramQC8: "--threads 6"
+
+SingleReadAdapterTrim:
+  Required:
+    adapterTrimSoftware: "/usr/local/bin/trimmomatic-0.39.jar"
+  Optional:
+    trimParamQIAGEN: "ILLUMINACLIP:/mnt/data21/data/ngsdata/adapters/qiagen_mirna.fasta:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:14"
+    trimParamNEBNEXT: "ILLUMINACLIP:/mnt/data21/data/ngsdata/adapters/NEBNext.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:14"
+
+CollapseReads:
+  Required:
+    fastq2fastaLocation: "/usr/local/bin/fastq_to_fasta"
+    fastxCollapserLocation: "/usr/local/bin/fastx_collapser"
+  Optional:
+    trimParam1: ""
+
+BowtieMapSingleAbundantReads:
+  Required:
+    mappingSoftware:  /usr/local/bin/bowtie
+    host: hsu
+  Optional:
+    mapMismatch1: " -v 1"
+
+BowtieMapSingleGenomeReads:
+  Required:
+    mappingSoftware:  /usr/local/bin/bowtie
+    host: hsu
+  Optional:
+    mapMismatch2: " -v 2 --norc"
+
+ParseSAMForMiRNAs:
+  Required:
+
+  Optional:
+    parseIso:  " --bleed=2, --mirbase_version=22.1u, --ref_genome=hsu, --baseline_percent=5, --analyze_isomirs=true, --group_by_seed_region=true, --seed_string=2-7"
+    parseMiR: " --bleed=2, --mirbase_version=22.1u, --ref_genome=hsu, --baseline_percent=5, --analyze_isomirs=false"
+
+
+MergeMiRCounts:
+  Required:
+
+  Optional:
+    mergeMiR: " --bleed=2, --mirbase_version=22.1u, --ref_genome=hsu, --baseline_percent=5"
+
+MergeIsomiRCounts:
+  Required:
+
+  Optional:
+    mergeIso: " --mirbase_version=22.1u, --ref_genome=hsu"
+
+DEwithEdgeRSingleFactor:
+  Required:
+
+  Optional:
+    parDEEdgeR: " --pvalue=0.05, --analyze_isomirs=true, --ref_genome=hsu, --execute_rscript=false"
+
+Hisat2Map:
+  Required:
+    mappingSoftware:  /usr/local/bin/hisat2
+    samtoolsSoftware:  /usr/local/bin/samtools
+    host: hsu
+  Optional:
+    hisatParams1: " -p 8 --dta"
+
+StringTie:
+  Required:
+    stringtieSoftware:  /usr/local/bin/stringtie
+    gffcompareSoftware:  /usr/local/bin/gffcompare
+    host: hsu
+  Optional:
+    stringtieParams1: " -p 2"
+
+BallgownAnalyze:
+  Required:
+
+  Optional:
+    bgParams1: " --pvalue=0.05, --execute_rscript=false"
